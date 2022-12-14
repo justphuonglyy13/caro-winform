@@ -1,0 +1,11 @@
+D:\Cybernetic\C#\CaroNet\bin\Debug\CaroNet.exe.config
+D:\Cybernetic\C#\CaroNet\bin\Debug\CaroNet.exe
+D:\Cybernetic\C#\CaroNet\bin\Debug\CaroNet.pdb
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.csproj.AssemblyReference.cache
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.csproj.SuggestedBindingRedirects.cache
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.Properties.Resources.resources
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.csproj.GenerateResource.cache
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.csproj.CoreCompileInputs.cache
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.exe
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.pdb
+D:\Cybernetic\C#\CaroNet\obj\Debug\CaroNet.Form1.resources
