@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,35 +14,35 @@ namespace CaroNet
     {
         //Attributes & Properties
         private Panel chessBoard;
-        public Panel ChessBoard { 
-            get => chessBoard; 
-            set => chessBoard = value; 
+        public Panel ChessBoard {
+            get => chessBoard;
+            set => chessBoard = value;
         }
 
         private Boolean turn = false;
 
         private List<Player> player;
-        public List<Player> Player { 
-            get => player; 
-            set => player = value; 
+        public List<Player> Player {
+            get => player;
+            set => player = value;
         }
 
         private int currentPlayer;
-        public int CurrentPlayer { 
-            get => currentPlayer; 
-            set => currentPlayer = value; 
+        public int CurrentPlayer {
+            get => currentPlayer;
+            set => currentPlayer = value;
         }
-        
+
         private TextBox playerName;
-        public TextBox PlayerName { 
-            get => playerName; 
-            set => playerName = value; 
+        public TextBox PlayerName {
+            get => playerName;
+            set => playerName = value;
         }
 
         private PictureBox playerMark;
-        public PictureBox PlayerMark { 
-            get => playerMark; 
-            set => playerMark = value; 
+        public PictureBox PlayerMark {
+            get => playerMark;
+            set => playerMark = value;
         }
 
         private List<List<Button>> matrix;
@@ -49,6 +50,27 @@ namespace CaroNet
         {
             get { return matrix; }
             set { matrix = value; }
+        }    
+
+        //Event Handler
+        private event EventHandler playerMarked;
+        public event EventHandler PlayerMarked
+        {
+            add { playerMarked += value; }
+            remove { playerMarked -= value; }
+        }
+
+        private event EventHandler endedGame;
+        public event EventHandler EndedGame
+        {
+            add { endedGame += value; }
+            remove { endedGame -= value; }
+        }
+
+        private Stack<PlayInfo> playLog;
+        public Stack<PlayInfo> PlayLog { 
+            get => playLog; 
+            set => playLog = value; 
         }
 
 
@@ -63,12 +85,20 @@ namespace CaroNet
                 new Player("Player_1", Properties.Resources.xBtn),
                 new Player("Player_2", Properties.Resources.oBtn)
             };
-            this.changePlayer();
         }
 
         //Methods
         public void drawChessBoard()
         {
+            //Enable ChessBorad
+            ChessBoard.Enabled = true;
+            ChessBoard.Controls.Clear();
+            this.PlayLog= new Stack<PlayInfo>();
+
+            this.CurrentPlayer = 0;
+
+            this.changePlayer();
+
             Matrix = new List<List<Button>>();
 
             Button oldButton = new Button() { Width = 0, Location = new Point(0, 0) };
@@ -108,20 +138,59 @@ namespace CaroNet
             if (btn.BackgroundImage != null) return;
 
             this.mark(btn);
+            this.PlayLog.Push(new PlayInfo(this.GetChessPoint(btn), this.CurrentPlayer));
+
+            //TODO: Cần tạo thêm methods mới để tách riêng việc chuyển người chơi 
+            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
             this.changePlayer();
+
+            if (playerMarked != null)
+            {
+                playerMarked(this, new EventArgs());
+            }
 
             if (this.isEndGame(btn))
             {
-                EndGame();
+                EndGame();       
             }
         }
 
         private void EndGame()
         {
-            this.CurrentPlayer = this.CurrentPlayer == 0? 1 : 0;
-            MessageBox.Show("GAME OVER!!!\nThe winner is " + Player[currentPlayer].Name);
-            Application.Exit();
-        } 
+            //this.CurrentPlayer = this.CurrentPlayer == 0 ? 1 : 0;
+            //MessageBox.Show("GAME OVER!!!\nThe winner is " + Player[currentPlayer].Name);
+
+            if (endedGame != null)
+            {
+                endedGame(this, new EventArgs());
+            }
+            //Application.Exit();
+        }
+
+        public bool Undo()
+        {
+            if (this.PlayLog.Count <= 0) { 
+                return false; 
+            }
+
+            PlayInfo prevMove = PlayLog.Pop();
+            Button btn = Matrix[prevMove.Point.Y][prevMove.Point.X];
+
+            btn.BackgroundImage = null;
+            if (PlayLog.Count <= 0)
+            {
+                CurrentPlayer = 0;
+            }
+            else
+            {
+                prevMove = PlayLog.Peek();
+                CurrentPlayer = prevMove.CurrentPlayer == 1 ? 0 : 1;
+            }
+
+            this.changePlayer();
+
+            return false;
+        }
 
         private bool isEndGame(Button btn)
         {
@@ -266,14 +335,12 @@ namespace CaroNet
         private void mark(Button btn)
         {
             btn.BackgroundImage = Player[CurrentPlayer].Mark;
-
-            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
         }
 
         private void changePlayer()
         {
-            PlayerName.Text = Player[CurrentPlayer].Name;
-            PlayerMark.Image = Player[CurrentPlayer].Mark;
+            this.PlayerName.Text = Player[CurrentPlayer].Name;
+            this.PlayerMark.Image = Player[CurrentPlayer].Mark;
         }
     }
 }

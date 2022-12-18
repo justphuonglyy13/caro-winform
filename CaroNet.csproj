@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessBoardManager.cs" />
+    <Compile Include="PlayInfo.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Form1.cs">
