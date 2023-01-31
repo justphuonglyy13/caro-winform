@@ -48,7 +48,7 @@ namespace CaroNet
 
             pnlChessBoard.Enabled = false;
             this.undoToolStripMenuItem.Enabled = false;
-            MessageBox.Show("END GAME!!!!");
+            MessageBox.Show("END GAME!!!!\nNgười chiến thắng là " + this.ChessBoard.Player[this.ChessBoard.CurrentPlayer == 1 ? 0 : 1].Name);
         }
 
         private void NewGame()
@@ -133,6 +133,11 @@ namespace CaroNet
         {
             if (MessageBox.Show("Bạn có chắc chắn muốn thoát chương trình", "Thông báo", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK)
                 e.Cancel= true;
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

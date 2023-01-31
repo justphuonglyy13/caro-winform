@@ -27,7 +27,5 @@ namespace CaroNet
             this.Name = name;
             this.Mark = mark;
         }
-        
-
     }
 }

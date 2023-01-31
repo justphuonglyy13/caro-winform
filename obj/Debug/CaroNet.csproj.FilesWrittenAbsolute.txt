@@ -1,0 +1,10 @@
+/mnt/d/Cybernetic/C#/CaroNet/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttribute.cs
+/mnt/d/Cybernetic/C#/CaroNet/obj/Debug/CaroNet.Form1.resources
+/mnt/d/Cybernetic/C#/CaroNet/obj/Debug/CaroNet.Properties.Resources.resources
+/mnt/d/Cybernetic/C#/CaroNet/bin/Debug/CaroNet.exe.config
+/mnt/d/Cybernetic/C#/CaroNet/bin/Debug/CaroNet.exe.mdb
+/mnt/d/Cybernetic/C#/CaroNet/bin/Debug/CaroNet.pdb
+/mnt/d/Cybernetic/C#/CaroNet/bin/Debug/CaroNet.exe
+/mnt/d/Cybernetic/C#/CaroNet/obj/Debug/CaroNet.exe
+/mnt/d/Cybernetic/C#/CaroNet/obj/Debug/CaroNet.exe.mdb
+/mnt/d/Cybernetic/C#/CaroNet/obj/Debug/CaroNet.pdb
